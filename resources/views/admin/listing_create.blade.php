@@ -100,12 +100,20 @@
                                             <textarea name="listing_map" class="form-control h_70" cols="30" rows="10">{{ old('listing_map') }}</textarea>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">{{ FINANCE }} Or {{ PRICE }}</label>
+                                            <select name="finance" class="form-control select2">
+                                                <option value="1">{{ FINANCE }}</option>
+                                                <option value="0">{{ PRICE }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="">{{ WEBSITE }}</label>
                                     <input type="text" name="listing_website" class="form-control" value="{{ old('listing_website') }}">
                                 </div>
-
                                 <div class="form-group">
                                     <label for="">{{ FEATURED_PHOTO }} *</label>
                                     <div>

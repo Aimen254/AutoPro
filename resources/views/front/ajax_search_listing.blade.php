@@ -1,3 +1,17 @@
+<style>
+    .listing .listing-item .photo .featured-text {
+        position: absolute;
+        top: 20px;
+        right: -30px;
+        background: #b70202;
+        color: #fff;
+        padding-left: 30px;
+        padding-right: 30px;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+</style>
 @foreach ($listings as $listing)
 
             @if($listing->user_id !=0)
@@ -20,7 +34,7 @@
                             <a href="{{ route('front_add_wishlist',$listing->id) }}"><i class="fas fa-heart"></i></a>
                         </div>
                         @if($listing->is_featured == 'Yes')
-                            <div class="featured-text">{{ FEATURED }}</div>
+                            <div class="featured-text">{{ SOLD }}</div>
                         @endif
                     </div>
                     <div class="text">

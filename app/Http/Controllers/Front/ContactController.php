@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Mail\ContactPageMessage;
 use App\Models\Admin;
+use App\Models\ContactForm;
 use App\Models\EmailTemplate;
 use App\Models\GeneralSetting;
 use App\Models\PageContactItem;
@@ -44,6 +45,12 @@ class ContactController extends Controller
             ]);
         }
 
+         $contact = new ContactForm();
+         $contact->visitor_name = $request->visitor_name;
+         $contact->visitor_email = $request->visitor_email;
+         $contact->visitor_phone = $request->visitor_phone;
+         $contact->visitor_message = $request->visitor_message;
+         $contact->save();
         // Send Email
         $email_template_data = EmailTemplate::where('id', 1)->first();
         $subject = $email_template_data->et_subject;
@@ -55,7 +62,7 @@ class ContactController extends Controller
         $message = str_replace('[[visitor_message]]', $request->visitor_message, $message);
 
         $admin_data = Admin::where('id',1)->first();
-
+dd($admin_data->email);
         Mail::to($admin_data->email)->send(new ContactPageMessage($subject,$message));
 
         return redirect()->back()->with('success', SUCCESS_CONTACT_MESSAGE);

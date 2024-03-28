@@ -838,6 +838,18 @@ a:hover {
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
 }
+.listing .listing-item .photo .sold-text {
+    position: absolute;
+    top: 20px;
+    right: -30px;
+    background: #FF0000;
+    color: #fff;
+    padding-left: 30px;
+    padding-right: 30px;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
 
 .listing .listing-item .text {
     background: #fff;

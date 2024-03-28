@@ -16,7 +16,6 @@ session()->put('currency_value',$value1);
 @endif
 
 <!DOCTYPE html>
-<html lang="en">
    	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -28,7 +27,7 @@ session()->put('currency_value',$value1);
         @if($route == null)
             @php $item_row = \App\Models\PageHomeItem::where('id',1)->first(); @endphp
 		    <title>{{ $item_row->seo_title }}</title>
-		    <meta name="description" content="{{ $item_row->seo_meta_description }}">
+		    <meta name="description" content="{{ $item_row->seo_meta_description }}"><html lang="en">
         @endif
 
         @if($route == 'front_about')
@@ -286,9 +285,8 @@ session()->put('currency_value',$value1);
             .listing-filter .lf-heading {
                 border-bottom-color: #{{ $g_setting->theme_color }};
             }
-
         </style>
-
+        @stack('css')
    	</head>
    	<body>
 
@@ -326,16 +324,16 @@ session()->put('currency_value',$value1);
                                     </select>
                                 </form>
                             </li>
-                            <li>
+                            <!-- <li>
                                 @if(Auth::user())
                                 <a href="{{ route('customer_dashboard') }}" class="nav-link"><i class="fas fa-sign-in-alt"></i> {{ MENU_DASHBOARD }}</a>
                                 @else
                                 <a href="{{ route('customer_login') }}" class="nav-link"><i class="fas fa-sign-in-alt"></i> {{ MENU_LOGIN_REGISTER }}</a>
                                 @endif
-                            </li>
-                            <li class="currency">
+                            </li> -->
+                            <!-- <li class="currency">
                                 <a href="{{ route('customer_listing_add') }}" class="nav-link"><i class="fas fa-plus"></i> {{ MENU_ADD_LISTING }}</a>
-                            </li>                            
+                            </li>                             -->
                         </ul>
                         @endif
                     </div>
@@ -348,7 +346,7 @@ session()->put('currency_value',$value1);
 		@yield('content')
 
 		@include('front.app_footer')
-
+        @stack('script')
       	<div class="scroll-top">
 		  	<i class="fas fa-long-arrow-alt-up"></i>
 	    </div>

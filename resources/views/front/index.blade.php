@@ -1,4 +1,33 @@
 @extends('front.app_front')
+@push('script')
+<script>
+$(document).ready(function () {
+    const financeSelect = $('#finance');
+    const maxPriceSelect = $('#max_price_select');
+
+    financeSelect.change(function () {
+        const selectedOption = $(this).val();
+        const priceSelectContainer = maxPriceSelect.prev(); // Get the Select2 container
+
+        if (selectedOption === '0') {
+            priceSelectContainer.find('.select2-selection__rendered').text('{{ MAX_PRICE }}');
+        } else if (selectedOption === '1') {
+            priceSelectContainer.find('.select2-selection__rendered').text('{{ MONTHLY_BUDGET }}');
+        } else if (selectedOption === 'type') {
+            priceSelectContainer.find('.select2-selection__rendered').text('{{ MAX_PRICE }}');
+        }
+
+        // Trigger Select2 to update the displayed text
+        maxPriceSelect.trigger('change.select2');
+    });
+
+    // Trigger change event initially to set initial text
+    financeSelect.trigger('change');
+});
+
+</script>
+
+@endpush
 
 @section('content')
 
@@ -15,13 +44,13 @@
 					<form action="{{ url('search-listing') }}" method="POST">
                         @csrf
 						<div class="input-group input-box mb-3">
-							<input type="text" class="form-control" placeholder="{{ FIND_ANYTHING }}" name="text">
-							<select name="location[]" class="form-control select2">
+							<!-- <input type="text" class="form-control" placeholder="{{ FIND_ANYTHING }}" name="text"> -->
+							<!-- <select name="location[]" class="form-control select2">
 								<option value="">{{ SELECT_LOCATION }}</option>
 								@foreach($listing_locations as $row)
 									<option value="{{ $row->id }}">{{ $row->listing_location_name }}</option>
 								@endforeach
-							</select>
+							</select> -->
 							<select name="brand[]" class="form-control select2">
 								<option value="">{{ SELECT_BRAND }}</option>
 								@foreach($listing_brands as $row)
@@ -32,6 +61,17 @@
 								<option value="">{{ SELECT_TYPE }}</option>
 								<option value="New Car">{{ NEW_CAR }}</option>
 								<option value="Used Car">{{ USED_CAR }}</option>
+							</select>
+							<select name="finance" class="form-control select2" id="finance">
+							    <option value="type"> Type </option>
+									<option value="0">Price</option>
+									<option value="1">Finance</option>
+							</select>
+							<select name="max_price" class="form-control select2" id="max_price_select">
+								<option value="" id="price_select">{{ MAX_PRICE }}</option>
+								@foreach($prices as $price)
+									<option value="{{ $price }}">{{ $price }}</option>
+								@endforeach
 							</select>
 							<div class="input-group-append">
 								<button type="submit"><i class="fa fa-search"></i> {{ SEARCH }}</button>
@@ -66,6 +106,27 @@
 						<a href="{{ $adv_home_data->above_brand_2_url }}" target="_blank"><img src="{{ asset('uploads/advertisements/'.$adv_home_data->above_brand_2) }}" alt=""></a>
 					@endif
 				</div>
+			</div>
+		</div>
+	</div>
+</div>
+@endif
+
+
+@if($page_home_items->brand_status == 'Show')
+<div class="popular-city">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="heading">
+					<h2>{{ $page_home_items->main_heading }}</h2>
+					<h3>{{ $page_home_items->main_sub_heading }}</h3>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+		    <div class="col-md-12 text-center">
+				{!! clean($page_home_items->main_text) !!}
 			</div>
 		</div>
 	</div>
@@ -155,7 +216,7 @@
 @endif
 
 
-@if($page_home_items->video_status == 'Show')
+<!-- @if($page_home_items->video_status == 'Show')
 <div class="home-video" style="background-image: url({{ asset('uploads/site_photos/'.$page_home_items->video_background) }})">
     <div class="bg"></div>
     <div class="container">
@@ -172,7 +233,7 @@
         </div>
     </div>
 </div>
-@endif
+@endif -->
 
 
 @if($page_home_items->listing_status == 'Show')
@@ -412,7 +473,7 @@
 
 
 
-@if($adv_home_data->above_location_status == 'Show')
+<!-- @if($adv_home_data->above_location_status == 'Show')
 <div class="ad-section">
 	<div class="container">
 		<div class="row">
@@ -437,10 +498,10 @@
 		</div>
 	</div>
 </div>
-@endif
+@endif -->
 
 
-@if($page_home_items->location_status == 'Show')
+<!-- @if($page_home_items->location_status == 'Show')
 <div class="popular-city">
 	<div class="container">
 		<div class="row">
@@ -492,6 +553,6 @@
 		</div>
 	</div>
 </div>
-@endif
+@endif -->
 
 @endsection

@@ -40,20 +40,25 @@ $page_listing_brand_item = \App\Models\PageListingBrandItem::where('id',1)->firs
 							<a href="{{ url('listing-result') }}" class="nav-link">{{ MENU_LISTING }}</a>
 						</li>
                         @endif
-
-                        @if($page_pricing_item->status == 'Show')
+						<li class="nav-item">
+							<a href="{{ url('about') }}" class="nav-link">{{ ABOUT }}</a>
+						</li>
+						<li class="nav-item">
+							<a href="{{ url('warranty') }}" class="nav-link">{{ WARRANTY }}</a>
+						</li>
+                        <!-- @if($page_pricing_item->status == 'Show')
 						<li class="nav-item">
 							<a href="{{ route('front_pricing') }}" class="nav-link">{{ MENU_PRICING }}</a>
 						</li>
-                        @endif
+                        @endif -->
 
-						@if($page_faq_item->status == 'Show')
+						<!-- @if($page_faq_item->status == 'Show')
 						<li class="nav-item">
 							<a href="{{ route('front_faq') }}" class="nav-link">{{ MENU_FAQ }}</a>
 						</li>
-						@endif
+						@endif -->
 
-                        @if($page_listing_location_item->status == 'Show' || $page_listing_brand_item->status == 'Show' || (!$dynamic_pages->isEmpty()))
+                        <!-- @if($page_listing_location_item->status == 'Show' || $page_listing_brand_item->status == 'Show' || (!$dynamic_pages->isEmpty()))
 						<li class="nav-item">
 							<a href="javascript:void;" class="nav-link dropdown-toggle">{{ MENU_PAGES }}</a>
 							<ul class="dropdown-menu">
@@ -79,11 +84,30 @@ $page_listing_brand_item = \App\Models\PageListingBrandItem::where('id',1)->firs
                                 @endif
 							</ul>
 						</li>
-                        @endif
-
+                        @endif -->
 						@if($page_blog_item->status == 'Show')
 						<li class="nav-item">
+							<a href="{{ route('finance.create') }}" class="nav-link">{{ MENU_FINANCE }}</a>
+						</li>
+						@endif
+						@if($page_blog_item->status == 'Show')
+						<li class="nav-item">
+							<a href="{{ route('partexchange.create') }}" class="nav-link">{{ PARTS_EXCHANGE }}</a>
+						</li>
+						@endif
+						@if($page_blog_item->status == 'Show')
+						<li class="nav-item">
+							<a href="{{ route('my_review_index') }}" class="nav-link">{{ MENU_REVIEW }}</a>
+						</li>
+						@endif
+						<!-- @if($page_blog_item->status == 'Show')
+						<li class="nav-item">
 							<a href="{{ route('front_blogs') }}" class="nav-link">{{ MENU_BLOG }}</a>
+						</li>
+						@endif -->
+						@if($page_blog_item->status == 'Show')
+						<li class="nav-item">
+							<a href="{{ route('front_listing_result_sold') }}" class="nav-link">{{ MENU_SOLD }}</a>
 						</li>
 						@endif
 

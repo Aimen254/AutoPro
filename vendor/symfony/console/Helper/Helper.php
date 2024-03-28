@@ -53,6 +53,7 @@ abstract class Helper implements HelperInterface
         return self::width($string);
     }
 
+
     /**
      * Returns the width of a string, using mb_strwidth if it is available.
      * The width is how many characters positions the string will use.
@@ -130,7 +131,7 @@ abstract class Helper implements HelperInterface
                         return $format[1];
                     }
 
-                    return floor($secs / $format[2]).' '.$format[1];
+                    return floor($secs / $format[2]) . ' ' . $format[1];
                 }
             }
         }

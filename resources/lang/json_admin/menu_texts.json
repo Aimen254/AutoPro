@@ -1,5 +1,8 @@
 {
     "MENU_HOME": "Home",
+    "MENU_REVIEW": "Reviews",
+    "MENU_FINANCE": "Finance",
+    "PARTS_EXCHANGE": "Parts Exchange",
     "MENU_LISTING": "Listings",
     "MENU_PRICING": "Pricing",
     "MENU_PAGES": "Pages",
@@ -8,6 +11,7 @@
     "MENU_FAQ": "FAQ",
     "MENU_BRAND": "Brand",
     "MENU_BLOG": "Blog",
+    "MENU_SOLD": "Sold Cars",
     "MENU_CONTACT": "Contact",
     "MENU_LOGIN_REGISTER": "Login or Register",
     "MENU_DASHBOARD": "Dashboard",

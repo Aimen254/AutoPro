@@ -22,6 +22,11 @@
                         <div class="lf-heading">
                             {{ FILTERS }}
                         </div>
+                        <input type="hidden"  name= "max_price" value="{{request()->get('max_price')}}">
+
+                        <input type="hidden"  name= "is_sold" value="{{$is_sold}}">
+                        <input type="hidden"  name= "finance" value="{{request()->get('finance')}} ">
+
                         <div class="lf-widget">
                             <input type="text" id="text" name="text" class="form-control" placeholder="{{ FIND_ANYTHING }}" value="{{ request()->has('text') ? request()->get('text') : '' }}">
                         </div>
