@@ -46,6 +46,7 @@ class Listing extends Model
         'seo_title',
         'seo_meta_description',
         'listing_status',
+        'finance',
         'is_featured'
     ];
 

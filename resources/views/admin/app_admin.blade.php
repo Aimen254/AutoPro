@@ -92,10 +92,11 @@ $g_setting = \App\Models\GeneralSetting::where('id',1)->first();
                 <i class="fas fa-folder"></i>
                 <span>{{ PAGE_SETTINGS }}</span>
             </a>
-            <div id="collapsePageSettings" class="collapse {{ $route == 'admin_page_home_edit'||$route == 'admin_page_about_edit'||$route == 'admin_page_blog_edit'||$route == 'admin_page_faq_edit'||$route == 'admin_page_contact_edit'||$route == 'admin_page_term_edit'||$route == 'admin_page_privacy_edit'||$route == 'admin_page_other_edit'||$route == 'admin_page_pricing_edit'||$route == 'admin_page_listing_brand_edit'||$route == 'admin_page_listing_location_edit'||$route == 'admin_page_listing_edit' ? 'show' : '' }}" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div id="collapsePageSettings" class="collapse {{ $route == 'admin_page_home_edit'|| $route == 'admin_page_warranty_edit' || $route == 'admin_page_about_edit'||$route == 'admin_page_blog_edit'||$route == 'admin_page_faq_edit'||$route == 'admin_page_contact_edit'||$route == 'admin_page_term_edit'||$route == 'admin_page_privacy_edit'||$route == 'admin_page_other_edit'||$route == 'admin_page_pricing_edit'||$route == 'admin_page_listing_brand_edit'||$route == 'admin_page_listing_location_edit'||$route == 'admin_page_listing_edit' ? 'show' : '' }}" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="{{ route('admin_page_home_edit') }}">{{ HOME }}</a>
                     <a class="collapse-item" href="{{ route('admin_page_about_edit') }}">{{ ABOUT }}</a>
+                    <a class="collapse-item" href="{{ route('admin_page_warranty_edit') }}">{{ WARRANTY }}</a>
                     <a class="collapse-item" href="{{ route('admin_page_blog_edit') }}">{{ BLOG }}</a>
                     <a class="collapse-item" href="{{ route('admin_page_faq_edit') }}">{{ FAQ }}</a>
                     <a class="collapse-item" href="{{ route('admin_page_contact_edit') }}">{{ CONTACT }}</a>
@@ -177,7 +178,18 @@ $g_setting = \App\Models\GeneralSetting::where('id',1)->first();
             </div>
         </li>
 
-
+        <li class="nav-item {{ $route == 'admin_view_finance_review' ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('admin_view_finance_review') }}">
+                <i class="far fa-caret-square-right"></i>
+                <span>{{ FINANCE }}</span>
+            </a>
+        </li>
+        <li class="nav-item {{ $route == 'admin_view_contact_form' ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('admin_view_contact_form') }}">
+                <i class="far fa-caret-square-right"></i>
+                <span>{{ CONTACT_FORM }}</span>
+            </a>
+        </li>
         <!-- Package Section -->
         <li class="nav-item {{ $route == 'admin_package_view'||$route == 'admin_package_create'||$route == 'admin_package_edit' ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('admin_package_view') }}">

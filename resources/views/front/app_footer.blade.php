@@ -64,7 +64,7 @@ $page_about_item = \App\Models\PageAboutItem::where('id',1)->first();
                         @endif
 
                         @if($page_blog_item->status == 'Show')
-						<li><a href="{{ route('front_blogs') }}">{{ MENU_BLOG }}</a></li>
+						<li><a href="{{ route('front_listing_result') }}">{{ MENU_LISTING }}</a></li>
                         @endif
 
 					</ul>

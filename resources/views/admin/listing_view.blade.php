@@ -18,7 +18,7 @@
                             <th>{{ FEATURED_PHOTO }}</th>
                             <th>{{ NAME }}, {{ BRAND }}, {{ LOCATION }}</th>
                             <th>{{ STATUS }}</th>
-                            <th>{{ QUESTION_IS_FEATURED }}</th>
+                            <th>{{ QUESTION_IS_SOLD }}</th>
                             <th class="w_200">{{ ACTION }}</th>
                         </tr>
                     </thead>

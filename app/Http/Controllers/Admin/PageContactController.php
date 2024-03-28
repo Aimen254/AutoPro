@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
+use App\Models\ContactForm;
 use App\Models\PageContactItem;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -14,6 +15,10 @@ class PageContactController extends Controller
         $this->middleware('auth.admin:admin');
     }
 
+    public function index(){
+        $reviews = ContactForm::orderBy('id', 'asc')->get();
+        return view('admin.contact-form.index', compact('reviews'));
+    }
     public function edit()
     {
         $page_contact = PageContactItem::where('id',1)->first();
@@ -60,6 +65,16 @@ class PageContactController extends Controller
 
         return redirect()->back()->with('success', SUCCESS_ACTION);
 
+    }
+
+    public function delete($id){
+        if(env('PROJECT_MODE') == 0) {
+            return redirect()->back()->with('error', env('PROJECT_NOTIFICATION'));
+        }
+        
+        $obj = ContactForm::findOrFail($id);
+        $obj->delete();
+        return Redirect()->back()->with('success', SUCCESS_ACTION);
     }
 
 }

@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\Admin\AdminFinanceController;
 use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\HomeAdvertisementController;
 use App\Http\Controllers\Admin\ProfileController;
@@ -35,7 +37,7 @@ use App\Http\Controllers\Admin\PackageController as PackageControllerForAdmin;
 use App\Http\Controllers\Admin\PurchaseHistoryController as PurchaseHistoryControllerForAdmin;
 use App\Http\Controllers\Admin\LanguageController;
 use App\Http\Controllers\Admin\ClearDatabaseController;
-
+use App\Http\Controllers\Admin\PageWarrantyItemController;
 use App\Http\Controllers\Front\CurrencyController as CurrencyControllerForFront;
 use App\Http\Controllers\Front\AboutController;
 use App\Http\Controllers\Front\PricingController;
@@ -50,7 +52,9 @@ use App\Http\Controllers\Front\TermController;
 use App\Http\Controllers\Front\CustomerAuthController;
 use App\Http\Controllers\Front\CustomerController as CustomerControllerForFront;
 use App\Http\Controllers\Front\ListingController as ListingControllerForFront;
-
+use App\Http\Controllers\Front\FinanceController;
+use App\Http\Controllers\Front\PartExchangeController;
+use App\Http\Controllers\Front\ReviewFrontController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -67,6 +71,9 @@ Route::post('currency', [CurrencyControllerForFront::class,'index'])
 
 Route::get('about', [AboutController::class,'index'])
     ->name('front_about');
+
+Route::get('warranty', [AboutController::class,'warranty_index'])
+    ->name('front_warranty');
 
 Route::get('pricing', [PricingController::class,'index'])
     ->name('front_pricing');
@@ -131,6 +138,9 @@ Route::get('agent/{type}/{id}', [ListingControllerForFront::class,'agent_detail'
 
 Route::get('listing-result', [ListingControllerForFront::class,'listing_result'])
     ->name('front_listing_result');
+
+    Route::get('listing-result-sold', [ListingControllerForFront::class,'listing_result_sold'])
+        ->name('front_listing_result_sold');
 
 Route::post('search-listing', [ListingControllerForFront::class,'search_listing'])
     ->name('search_front_listing_result');
@@ -251,9 +261,19 @@ Route::get('customer/listing/delete/{id}', [CustomerControllerForFront::class,'l
 Route::get('customer/listing/edit/{id}', [CustomerControllerForFront::class,'listing_edit'])
     ->name('customer_listing_edit');
 
+Route::get('review/index/', [ReviewFrontController::class,'index'])
+    ->name('my_review_index');
+Route::get('review/create/', [ReviewFrontController::class,'create'])
+    ->name('my_review_create');
+Route::post('review/store/', [ReviewFrontController::class,'store'])
+    ->name('my_review_store');
+
 Route::post('customer/listing/update/{id}', [CustomerControllerForFront::class,'listing_update'])
     ->name('customer_listing_update');
-
+Route::resource('finance', FinanceController::class)
+    ->names('finance');
+Route::resource('part-exchange', PartExchangeController::class)
+    ->names('partexchange');
 Route::get('customer/reviews', [CustomerControllerForFront::class,'my_reviews'])
     ->name('customer_my_reviews');
 
@@ -608,6 +628,18 @@ Route::post('admin/admin-review/update/{id}', [ReviewController::class,'update_a
 Route::get('admin/admin-review/delete/{id}', [ReviewController::class,'delete_admin_review'])
     ->name('admin_delete_admin_review');
 
+Route::get('admin/contact-form/view', [PageContactController::class,'index'])
+    ->name('admin_view_contact_form');
+Route::get('admin/contact-form/delete/{id}', [PageContactController::class,'delete'])
+    ->name('admin_delete_contact_form');
+
+Route::get('admin/customer-finance/view', [AdminFinanceController::class,'index'])
+    ->name('admin_view_finance_review');
+Route::get('admin/customer-finance/show/{id}', [AdminFinanceController::class,'show'])
+    ->name('admin_show_finance_review');
+Route::get('admin/customer-finance/delete/{id}', [AdminFinanceController::class,'delete'])
+    ->name('admin_delete_finance_review');
+
 Route::get('admin/customer-review/view', [ReviewController::class,'view_customer_review'])
     ->name('admin_view_customer_review');
 
@@ -670,6 +702,11 @@ Route::get('admin/page-home/edit', [PageHomeController::class,'edit'])
     ->name('admin_page_home_edit');
 Route::post('admin/page-home/update', [PageHomeController::class,'update'])
     ->name('admin_page_home_update');
+
+Route::get('admin/page-warranty/edit', [PageWarrantyItemController::class,'edit'])
+    ->name('admin_page_warranty_edit');
+Route::post('admin/page-warranty/update', [PageWarrantyItemController::class,'update'])
+    ->name('admin_page_warranty_update');
 
 Route::get('admin/page-about/edit', [PageAboutController::class,'edit'])
     ->name('admin_page_about_edit');

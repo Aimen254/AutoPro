@@ -880,7 +880,6 @@ class CustomerController extends Controller
             ->paginate(10);
         return view('front.customer_my_reviews', compact('g_setting','reviews','page_other_item'));
     }
-
     public function review_edit($id) 
     {
         $g_setting = GeneralSetting::where('id', 1)->first();

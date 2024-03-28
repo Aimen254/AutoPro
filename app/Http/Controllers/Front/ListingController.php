@@ -253,8 +253,8 @@ class ListingController extends Controller
         $listings = $listings->appends($request->all());
 
 
-
-        return view('front.listing_result', compact('g_setting','listing_page_data','listing_brands', 'listing_locations', 'amenities', 'all_brand', 'all_location', 'all_amenity', 'listings'));
+        $is_sold = 'No';
+        return view('front.listing_result', compact('g_setting','listing_page_data','listing_brands', 'listing_locations', 'amenities', 'all_brand', 'all_location', 'all_amenity', 'listings','is_sold'));
 
     }
 
@@ -304,8 +304,21 @@ class ListingController extends Controller
             $brand_arr = $request->brand;
             $listings = $listings->whereIn('listing_brand_id', $brand_arr);
         }
+        if ($request->max_price){
+            $maxPrice = $request->max_price;
+            $listings = $listings->where('listing_price', '<', $maxPrice);
 
-
+        }
+//        if ($request->finance) {
+//            $finance = $request->finance;
+//            if ($finance == 1) {
+//                $listings = $listings->whereIn('finance', 1);
+//            }
+//        }
+        if($request->brand){
+            $brand_arr = $request->brand;
+            $listings = $listings->whereIn('listing_brand_id', $brand_arr);
+        }
         if($request->listing_type){
             if($request->listing_type == 'New Car'){
                 $listings = $listings->where('listing_type','New Car');
@@ -322,9 +335,8 @@ class ListingController extends Controller
         $listings = $listings->paginate(20);
         $listings = $listings->appends($request->all());
 
-
-
-        return view('front.listing_result', compact('g_setting','listing_page_data','listing_brands', 'listing_locations', 'amenities', 'all_brand', 'all_location', 'all_amenity', 'listings'));
+        $is_sold = 'No';
+        return view('front.listing_result', compact('g_setting','listing_page_data','listing_brands', 'listing_locations', 'amenities', 'all_brand', 'all_location', 'all_amenity', 'listings','is_sold'));
     }
 
 
@@ -365,14 +377,24 @@ class ListingController extends Controller
                 $listings = $listings->where('listing_type','Used Car');
             }
         }
+        if($request->max_price){
+            $maxPrice = $request->max_price;
+
+            $listings = $listings->where('listing_price', '<', $maxPrice);
+//            dd( $listings );
+
+        }
 
         if($request->text){
             $listings = $listings->where('listing_name', 'LIKE', '%'.$request->text.'%');
         }
+        $listings = $listings->where('is_featured',  $request->is_sold);
         $listings = $listings->where('listing_status','Active');
+        if($request->finance){
+            $listings = $listings->where('finance',$request->finance);
+        }
         $listings = $listings->paginate(20);
-        $listings = $listings->appends($request->all());
-
+        //$listings = $listings->appends($request->all());
 
         return view('front.ajax_search_listing', compact('listings'));
     }
@@ -496,5 +518,75 @@ class ListingController extends Controller
         $obj->save();
 
         return redirect()->back()->with('success', SUCCESS_WISHLIST_ADD);
+    }
+
+    public function listing_result_sold(Request $request)
+    {
+        $g_setting = GeneralSetting::where('id', 1)->first();
+        $listing_page_data = PageListingItem::where('id', 1)->first();
+        $listing_brands = ListingBrand::get();
+        $listing_locations = ListingLocation::get();
+        $amenities = Amenity::get();
+
+        // Breaking Urls
+        $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $actual_link_len = strlen($actual_link);
+
+        $first_part = url()->current();
+        $first_part_len = strlen($first_part);
+
+        $all_brand = [];
+        $all_location = [];
+        $all_amenity = [];
+
+        $aa = substr($actual_link,($first_part_len+1),($actual_link_len-1));
+        $arr = explode('&',$aa);
+
+
+        if($request->amenity){
+            $listings = Listing::whereHas('listingAminities', function($query) use ($request){
+                $sortArr = [];
+                if($request->amenity){
+                    foreach($request->amenity as $amnty){
+                        $sortArr[] = $amnty;
+                    }
+                    $query->whereIn('amenity_id', $sortArr);
+                }
+            })->with('user')->orderBy('id','desc');
+        }else{
+            $listings = Listing::with('user')->orderBy('id','desc');
+        }
+
+        if($request->location){
+            $location_arr = $request->location;
+            $listings = $listings->whereIn('listing_location_id', $location_arr);
+        }
+
+        if($request->brand){
+            $brand_arr = $request->brand;
+            $listings = $listings->whereIn('listing_brand_id', $brand_arr);
+        }
+
+
+        if($request->listing_type){
+            if($request->listing_type == 'New Car'){
+                $listings = $listings->where('listing_type','New Car');
+            }
+            if($request->listing_type == 'Used Car'){
+                $listings = $listings->where('listing_type','Used Car');
+            }
+        }
+
+        if($request->text){
+            $listings = $listings->where('listing_name', 'LIKE', '%'.$request->text.'%');
+        }
+
+       // $listings = $listings->where('is_featured', 'yes');
+        $listings = $listings->paginate(20);
+        $listings = $listings->appends($request->all());
+        $is_sold = 'Yes';
+
+        return view('front.listing_result', compact('g_setting','listing_page_data','listing_brands', 'listing_locations', 'amenities', 'all_brand', 'all_location', 'all_amenity', 'listings','is_sold'));
+
     }
 }

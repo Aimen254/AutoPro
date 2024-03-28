@@ -48,6 +48,13 @@
     -ms-transform: rotate(-45deg);
     transform: rotate(-45deg);
 }
+.listing .listing-item .photo .sold-text {
+    right: auto;
+    left: -30px;
+    -webkit-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
 
 .listing .listing-item .photo .brand {
     left: auto;
